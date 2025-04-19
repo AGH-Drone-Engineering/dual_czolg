@@ -70,7 +70,5 @@ class MavlinkTask:
                     last_gps_message_time = current_time
                     self.handle_gps_data(msg)
 
-        except KeyboardInterrupt:
-            print("Exiting...")
         finally:
             self.connection.close()

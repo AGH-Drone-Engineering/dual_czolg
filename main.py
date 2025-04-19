@@ -54,11 +54,8 @@ def main():
     mavlink_task.start()
     camera_task.start()
 
-    try:
-        mavlink_task.join()
-        camera_task.join()
-    except KeyboardInterrupt:
-        print("Exiting...")
+    mavlink_task.join()
+    camera_task.join()
 
 
 if __name__ == "__main__":

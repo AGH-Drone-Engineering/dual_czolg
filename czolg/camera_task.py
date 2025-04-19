@@ -52,7 +52,5 @@ class CameraTask:
                 image = self.picam2.capture_array()
                 # TODO: do stuff
                 time.sleep(1)
-        except KeyboardInterrupt:
-            pass
         finally:
             self.picam2.stop_recording()
