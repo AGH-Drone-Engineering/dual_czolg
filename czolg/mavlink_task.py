@@ -4,8 +4,9 @@ import threading
 
 
 class MavlinkTask:
-    def __init__(self, connection):
+    def __init__(self, connection, camera_task):
         self.connection = connection
+        self.camera_task = camera_task
         self.thread = threading.Thread(target=self.task)
 
     def start(self):
@@ -41,6 +42,8 @@ class MavlinkTask:
             print(f"  Ground speed Z: {msg.vz / 100} m/s")
             print(f"  Heading: {msg.hdg / 100} deg")
             print("-------------------------------------")
+
+            self.camera_task.update_position(msg)
 
     def task(self):
         print("Waiting for heartbeat...")

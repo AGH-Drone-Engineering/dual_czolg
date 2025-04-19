@@ -7,10 +7,10 @@ from czolg.camera_task import CameraTask
 
 def main():
     parser = argparse.ArgumentParser(description='MAVLink Tank Controller')
-    
+
     parser.add_argument('--tty', type=str, help='Enable TTY mode with the given path')
     parser.add_argument('--baudrate', type=int, help='Baudrate for TTY mode')
-    
+
     parser.add_argument('--udpin', action='store_true', help='Enable UDPIN mode')
     parser.add_argument('--port', type=int, default=14550, help='Port for UDPIN mode')
 
@@ -44,18 +44,18 @@ def main():
     if not connection:
         print("Error: Invalid connection parameters")
         return
-    
+
     if not args.camera_viewer_ip:
         print("Warning: --camera-viewer-ip is not set, camera stream will not be sent")
 
-    mavlink_task = MavlinkTask(connection)
     camera_task = CameraTask(args.camera_viewer_ip, args.camera_viewer_port, args.camera_preview)
+    mavlink_task = MavlinkTask(connection, camera_task)
 
-    mavlink_task.start()
     camera_task.start()
+    mavlink_task.start()
 
-    mavlink_task.join()
     camera_task.join()
+    mavlink_task.join()
 
 
 if __name__ == "__main__":
