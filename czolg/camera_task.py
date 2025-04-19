@@ -20,7 +20,7 @@ class CameraTask:
             queue=False,
         )
         self.picam2.configure(video_config)
-        self.encoder = H264Encoder(bitrate=1_000_000)
+        self.encoder = H264Encoder(bitrate=1_000_000, repeat=True)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.stream = None
         self.thread = threading.Thread(target=self.task)
