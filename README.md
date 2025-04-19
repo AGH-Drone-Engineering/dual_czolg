@@ -10,8 +10,16 @@ pip install --break-system-packages pymavlink
 
 ## Run
 
+Remote preview:
+
 ```bash
 python main.py --tty /dev/ttyAMA0 --baudrate 57600 --camera-viewer-ip <your-ip>
+```
+
+Local preview:
+
+```bash
+python main.py --tty /dev/ttyAMA0 --baudrate 57600 --camera-preview
 ```
 
 ## View camera
