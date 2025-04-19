@@ -39,7 +39,10 @@ def main():
     mavlink_task = MavlinkTask(connection)
     mavlink_task.start()
 
-    mavlink_task.join()
+    try:
+        mavlink_task.join()
+    except KeyboardInterrupt:
+        print("Exiting...")
 
 
 if __name__ == "__main__":
