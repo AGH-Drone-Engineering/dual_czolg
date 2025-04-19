@@ -1,4 +1,5 @@
 version = 1
+revision = 1
 requires-python = ">=3.10"
 
 [[package]]
@@ -7,10 +8,14 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "pymavlink" },
+    { name = "pyserial" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "pymavlink", specifier = ">=2.4.43" }]
+requires-dist = [
+    { name = "pymavlink", specifier = ">=2.4.43" },
+    { name = "pyserial", specifier = ">=3.5" },
+]
 
 [[package]]
 name = "future"
@@ -114,4 +119,13 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/a6/db/04ef61e12ce4fef974a62b8b00d9c1a128df54629446692a9a1389bc4ee5/pymavlink-2.4.43.tar.gz", hash = "sha256:21c4a1ba355c05742d2af41510576d6e08dba0d77602e9ea635331cd0755ee76", size = 11695969 }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/8d/1f/17bfda24167ddfacf5d1f0572708a101c7e875768c90ee4bb5533c074ddf/pymavlink-2.4.43-py3-none-any.whl", hash = "sha256:831e42a7a4b66a01075808dfedd55e5fb199128826cd80ab7e5c287a64639b6c", size = 11906939 },
+]
+
+[[package]]
+name = "pyserial"
+version = "3.5"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/1e/7d/ae3f0a63f41e4d2f6cb66a5b57197850f919f59e558159a4dd3a818f5082/pyserial-3.5.tar.gz", hash = "sha256:3c77e014170dfffbd816e6ffc205e9842efb10be9f58ec16d3e8675b4925cddb", size = 159125 }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/07/bc/587a445451b253b285629263eb51c2d8e9bcea4fc97826266d186f96f558/pyserial-3.5-py2.py3-none-any.whl", hash = "sha256:c4451db6ba391ca6ca299fb3ec7bae67a5c55dde170964c7a14ceefec02f2cf0", size = 90585 },
 ]
