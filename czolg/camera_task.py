@@ -1,7 +1,7 @@
 import time
 import socket
 from picamera2 import Picamera2, MappedArray
-from picamera2.encoders import H264Encoder
+from picamera2.encoders import JpegEncoder
 from picamera2.outputs import FileOutput
 import cv2
 import threading
@@ -18,12 +18,12 @@ class CameraTask:
         self.picam2 = Picamera2()
         self.picam2.post_callback = self.post_callback
         video_config = self.picam2.create_video_configuration(
-            main={"format": "YUV420"},
+            main={"format": "XRGB8888"},
             buffer_count=2,
             queue=False,
         )
         self.picam2.configure(video_config)
-        self.encoder = H264Encoder(bitrate=1_000_000, repeat=True)
+        self.encoder = JpegEncoder()
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.stream = None
 
