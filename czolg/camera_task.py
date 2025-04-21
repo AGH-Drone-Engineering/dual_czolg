@@ -18,7 +18,8 @@ class CameraTask:
         self.picam2 = Picamera2()
         self.picam2.post_callback = self.post_callback
         video_config = self.picam2.create_video_configuration(
-            main={"format": "XRGB8888"},
+            main={"size": (1920, 1080), "format": "XRGB8888"},
+            controls={"FrameRate": 30},
             buffer_count=2,
             queue=False,
         )
@@ -62,11 +63,13 @@ class CameraTask:
             cv2.putText(m.array, timestamp, origin, font, scale, colour, thickness)
 
     def task(self):
+        writer = cv2.VideoWriter(os.path.join(self.log_dir, "video.avi"), cv2.VideoWriter_fourcc(*"MJPG"), 30, (1920, 1080))
         try:
             frame_number = 0
             while True:
                 image = self.picam2.capture_array()
-                cv2.imwrite(os.path.join(self.log_dir, f"{frame_number:06d}.jpg"), image)
+                writer.write(image)
+                # cv2.imwrite(os.path.join(self.log_dir, f"{frame_number:06d}.jpg"), image)
                 with open(os.path.join(self.log_dir, f"{frame_number:06d}.json"), "w") as f:
                     json.dump({
                         "image_timestamp": time.time(),
@@ -75,4 +78,5 @@ class CameraTask:
                     }, f)
                 frame_number += 1
         finally:
+            writer.release()
             self.picam2.stop_recording()
