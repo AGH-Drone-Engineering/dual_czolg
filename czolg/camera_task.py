@@ -19,9 +19,9 @@ class CameraTask:
         self.picam2.post_callback = self.post_callback
         video_config = self.picam2.create_video_configuration(
             main={"size": (1920, 1080), "format": "XRGB8888"},
+            lores={"size": (1280, 720), "format": "XRGB8888"},
             controls={"FrameRate": 30},
-            buffer_count=2,
-            queue=False,
+            encode="lores",
         )
         self.picam2.configure(video_config)
         self.encoder = JpegEncoder()
@@ -67,7 +67,7 @@ class CameraTask:
         try:
             frame_number = 0
             while True:
-                image = self.picam2.capture_array()
+                image = self.picam2.capture_array("main")
                 writer.write(image)
                 # cv2.imwrite(os.path.join(self.log_dir, f"{frame_number:06d}.jpg"), image)
                 with open(os.path.join(self.log_dir, f"{frame_number:06d}.json"), "w") as f:

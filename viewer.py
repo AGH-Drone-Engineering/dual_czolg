@@ -11,7 +11,10 @@ def main():
         data, addr = sock.recvfrom(65507)
         jpeg_buf = np.frombuffer(data, dtype=np.uint8)
         image = cv2.imdecode(jpeg_buf, cv2.IMREAD_COLOR)
-        cv2.imshow("image", image)
+        try:
+            cv2.imshow("image", image)
+        except cv2.error:
+            pass
         if cv2.waitKey(1) & 0xFF == 27:
             break
 
