@@ -18,8 +18,8 @@ class CameraTask:
         self.picam2 = Picamera2()
         self.picam2.post_callback = self.post_callback
         video_config = self.picam2.create_video_configuration(
-            main={"size": (1920, 1080), "format": "XRGB8888"},
-            lores={"size": (1280, 720), "format": "XRGB8888"},
+            main={"size": (1920, 1080), "format": "BGR888"},
+            lores={"size": (1280, 720), "format": "BGR888"},
             controls={"FrameRate": 30},
             encode="lores",
         )
@@ -62,6 +62,19 @@ class CameraTask:
         with MappedArray(request, "main") as m:
             cv2.putText(m.array, timestamp, origin, font, scale, colour, thickness)
 
+    def mavlink_to_dict(self, msg):
+        return {
+            "time_boot_ms": msg.time_boot_ms,
+            "lat": msg.lat,
+            "lon": msg.lon,
+            "alt": msg.alt,
+            "relative_alt": msg.relative_alt,
+            "vx": msg.vx,
+            "vy": msg.vy,
+            "vz": msg.vz,
+            "hdg": msg.hdg
+        }
+
     def task(self):
         writer = cv2.VideoWriter(os.path.join(self.log_dir, "video.avi"), cv2.VideoWriter_fourcc(*"MJPG"), 30, (1920, 1080))
         try:
@@ -74,7 +87,7 @@ class CameraTask:
                     json.dump({
                         "image_timestamp": time.time(),
                         "position_timestamp": self.last_position_timestamp,
-                        "position": self.last_position,
+                        "position": None if self.last_position is None else self.mavlink_to_dict(self.last_position),
                     }, f)
                 frame_number += 1
         finally:
