@@ -1,7 +1,7 @@
 import time
 import socket
 from picamera2 import Picamera2, MappedArray
-from picamera2.encoders import JpegEncoder
+from picamera2.encoders import MJPEGEncoder
 from picamera2.outputs import FileOutput
 import cv2
 import threading
@@ -24,7 +24,7 @@ class CameraTask:
             encode="lores",
         )
         self.picam2.configure(video_config)
-        self.encoder = JpegEncoder()
+        self.encoder = MJPEGEncoder(bitrate=1e6)
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         self.stream = None
 
