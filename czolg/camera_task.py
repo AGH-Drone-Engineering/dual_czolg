@@ -20,6 +20,7 @@ class CameraTask:
         video_config = self.picam2.create_video_configuration(
             main={"size": (1920, 1080), "format": "BGR888"},
             lores={"size": (1280, 720), "format": "BGR888"},
+            raw={"size": (3280, 2464)},
             controls={"FrameRate": 30},
             encode="lores",
         )
