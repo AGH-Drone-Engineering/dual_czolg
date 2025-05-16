@@ -3,6 +3,7 @@ import socket
 from picamera2 import Picamera2, MappedArray
 from picamera2.encoders import MJPEGEncoder
 from picamera2.outputs import FileOutput
+from libcamera import Transform
 import cv2
 import threading
 import os
@@ -23,6 +24,7 @@ class CameraTask:
             raw={"size": (3280, 2464)},
             controls={"FrameRate": 30, "ExposureTime": 10000},
             encode="lores",
+            transform=Transform(hflip=1, vflip=1),
         )
         self.picam2.configure(video_config)
         self.encoder = MJPEGEncoder(bitrate=1e6)
