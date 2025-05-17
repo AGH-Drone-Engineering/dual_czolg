@@ -19,10 +19,10 @@ class CameraTask:
         self.picam2 = Picamera2()
         self.picam2.post_callback = self.post_callback
         video_config = self.picam2.create_video_configuration(
-            main={"size": (1920, 1080), "format": "BGR888"},
+            main={"size": (3280, 2464), "format": "BGR888"},
             lores={"size": (1280, 720), "format": "BGR888"},
             raw={"size": (3280, 2464)},
-            controls={"FrameRate": 30, "ExposureTime": 10000},
+            controls={"FrameRate": 10, "ExposureTime": 10000},
             encode="lores",
             transform=Transform(hflip=1, vflip=1),
         )
@@ -79,7 +79,7 @@ class CameraTask:
         }
 
     def task(self):
-        writer = cv2.VideoWriter(os.path.join(self.log_dir, "video.avi"), cv2.VideoWriter_fourcc(*"MJPG"), 30, (1920, 1080))
+        writer = cv2.VideoWriter(os.path.join(self.log_dir, "video.avi"), cv2.VideoWriter_fourcc(*"MJPG"), 10, (3280, 2464))
         try:
             frame_number = 0
             while True:
